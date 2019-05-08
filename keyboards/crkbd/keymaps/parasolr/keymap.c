@@ -59,6 +59,8 @@ enum macro_keycodes {
 #define KC_CTLBS CTL_T(KC_BSPC)
 #define KC_LWSPC LT(_LOWER, KC_SPC)
 #define KC_RSENT LT(_RAISE, KC_ENT)
+#define KC_GLEFT LGUI(KC_LEFT)
+#define KC_GRGHT LGUI(KC_RGHT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -89,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC, XXXXX,  PGUP,    UP,  PGDN, XXXXX,                   AMPR,  QUOT,  LPRN,  RPRN,  MINS,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,  HOME,  LEFT,  DOWN,  RGHT,   END,                   PLUS,   EQL,  LCBR,  RCBR,   GRV,  CIRC,\
+      CTLTB, GLEFT,  LEFT,  DOWN,  RGHT, GRGHT,                   PLUS,   EQL,  LCBR,  RCBR,   GRV,  CIRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   PIPE,  ASTR,  LBRC,  RBRC,  BSLS,  UNDS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
