@@ -77,11 +77,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                      6,     7,     8,     9,     0,  BSPC,\
+        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                  XXXXX, XXXXX, XXXXX, XXXXX,  MINS,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,     1,     2,     3,     4,     5,                     F1,    F2,    F3,    F4,    F5,   F11,\
+      CTLTB,     1,     2,     3,     4,     5,                   PLUS,   EQL, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,     6,     7,     8,     9,     0,                     F6,    F7,    F8,    F9,   F10,   F12,\
+       LSFT,     6,     7,     8,     9,     0,                  XXXXX,  ASTR,  COMM,   DOT,  BSLS, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   GUIEI,  LSFT, LOWER,    RAISE, CTLBS, ALTKN \
                               //`--------------------'  `--------------------'
@@ -103,9 +103,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         RST,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                     F1,    F2,    F3,    F4,    F5,   F11,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                     F6,    F7,    F8,    F9,   F10,   F12,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   GUIEI,  LSFT, LOWER,    RAISE, CTLBS, ALTKN \
                               //`--------------------'  `--------------------'
