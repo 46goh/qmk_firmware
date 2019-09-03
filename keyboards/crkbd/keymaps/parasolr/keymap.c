@@ -91,9 +91,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC, XXXXX,  PGUP,    UP,  PGDN, XXXXX,                   AMPR,  QUOT,  LPRN,  RPRN,  MINS,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, GLEFT,  LEFT,  DOWN,  RGHT, GRGHT,                   PLUS,   EQL,  LCBR,  RCBR,  CIRC,   GRV,\
+      CTLTB, GLEFT,  LEFT,  DOWN,  RGHT, GRGHT,                   PLUS,   EQL,  LBRC,  LBRC,  CIRC,   GRV,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   PIPE,  ASTR,  LBRC,  RBRC,  BSLS,  UNDS,\
+       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   PIPE,  ASTR,  LCBR,  RCBR,  BSLS,  UNDS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   GUIEI,  LSFT, LOWER,    RAISE, CTLBS, ALTKN \
                               //`--------------------'  `--------------------'
