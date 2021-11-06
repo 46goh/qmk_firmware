@@ -28,7 +28,7 @@ LCTL_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_UNDS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                           KC_LGUI, LT(2, KC_LANG1), LSFT_T(KC_SPC),     KC_ENT, LT(3, KC_LANG2), KC_BSPC
+                           LGUI_T(KC_LANG2), KC_LSFT, LT(2, KC_SPC),       LT(3, KC_ENT), KC_BSPC, KC_LANG1
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -41,7 +41,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_UNDS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                           KC_LCTL, LT(2, LALT_T(KC_GRV)), LSFT_T(KC_SPC),     KC_ENT, LT(3, KC_LANG5), KC_BSPC
+                                    KC_LCTL, KC_LSFT, LT(2, KC_SPC),   LT(3, KC_ENT), KC_BSPC, LALT(KC_GRV)
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -53,9 +53,9 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, OSM(MOD_LCTL), OSM(MOD_LALT), OSM(MOD_LGUI), OSM(MOD_LSFT), XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, OSM(MOD_LCTL), OSM(MOD_LALT), OSM(MOD_LGUI), OSM(MOD_LSFT), XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______,   MO(4), _______
+                                          _______, _______, _______,      MO(4), _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -67,7 +67,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                      KC_SLSH, KC_PIPE, KC_BSLS, KC_LCBR, KC_RCBR, KC_UNDS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______,   MO(4), _______,    _______, _______, _______
+                                          _______, _______,   MO(4),    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -94,15 +94,19 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 #define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
+#define L_LOWER 4
+#define L_RAISE 8
+#define L_ADJUST 16
 
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (layer_state) {
         case L_BASE:
-            oled_write_ln_P(PSTR("Default"), false);
+            if (get_highest_layer(default_layer_state) == 0) {
+                oled_write_ln_P(PSTR("Default(Mac)"), false);
+            } else {
+                oled_write_ln_P(PSTR("Default(Win)"), false);
+            }
             break;
         case L_LOWER:
             oled_write_ln_P(PSTR("Lower"), false);
