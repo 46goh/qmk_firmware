@@ -19,6 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+enum custom_keycodes {
+  QWERTY = SAFE_RANGE,
+  L_SPC,
+  R_ENT,
+  ADJUST,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -28,7 +35,7 @@ LCTL_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_UNDS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                           LGUI_T(KC_LANG2), KC_LSFT, LT(2, KC_SPC),       LT(3, KC_ENT), KC_BSPC, KC_LANG1
+                                 LGUI_T(KC_LANG2), KC_LSFT,   L_SPC,      R_ENT, KC_BSPC, KC_LANG1
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -41,7 +48,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_UNDS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                    KC_LCTL, KC_LSFT, LT(2, KC_SPC),   LT(3, KC_ENT), KC_BSPC, LALT(KC_GRV)
+                                          KC_LCTL, KC_LSFT,   L_SPC,      R_ENT, KC_BSPC, LALT(KC_GRV)
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -55,7 +62,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,      MO(4), _______, _______
+                                          _______, _______, _______,   _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -67,7 +74,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                      KC_SLSH, KC_PIPE, KC_BSLS, KC_LCBR, KC_RCBR, KC_UNDS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______,   MO(4),    _______, _______, _______
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -185,9 +192,66 @@ void oled_task_user(void) {
     }
 }
 
+static bool lower_pressed = false;
+static uint16_t lower_pressed_time = 0;
+static bool raise_pressed = false;
+static uint16_t raise_pressed_time = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
+  switch (keycode) {
+    case L_SPC:
+      if (record->event.pressed) {
+        lower_pressed = true;
+        lower_pressed_time = record->event.time;
+
+        layer_on(2);
+        update_tri_layer(2, 3, 4);
+      } else {
+        layer_off(2);
+        update_tri_layer(2, 3, 4);
+
+        if (lower_pressed && (TIMER_DIFF_16(record->event.time, lower_pressed_time) < TAPPING_TERM)) {
+          register_code(KC_SPC);
+          unregister_code(KC_SPC);
+        }
+        lower_pressed = false;
+      }
+      return false;
+      break;
+    case R_ENT:
+      if (record->event.pressed) {
+        raise_pressed = true;
+        raise_pressed_time = record->event.time;
+
+        layer_on(3);
+        update_tri_layer(2, 3, 4);
+      } else {
+        layer_off(3);
+        update_tri_layer(2, 3, 4);
+
+        if (raise_pressed && (TIMER_DIFF_16(record->event.time, raise_pressed_time) < TAPPING_TERM)) {
+          register_code(KC_ENT);
+          unregister_code(KC_ENT);
+        }
+        raise_pressed = false;
+      }
+      return false;
+      break;
+    case ADJUST:
+      if (record->event.pressed) {
+        layer_on(4);
+      } else {
+        layer_off(4);
+      }
+      return false;
+      break;
+    default:
+      if (record->event.pressed) {
+        lower_pressed = false;
+        raise_pressed = false;
+        set_keylog(keycode, record);
+      }
+      break;
   }
   return true;
 }
