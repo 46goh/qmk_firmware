@@ -35,7 +35,7 @@ LCTL_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, LM(2, MOD_LGUI),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                 LGUI_T(KC_LANG2), KC_LSFT,   L_SPC,      R_ENT, KC_BSPC, KC_LANG1
+                                 LGUI_T(KC_LNG2),  KC_LSFT,   L_SPC,      R_ENT, KC_BSPC, KC_LNG1
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -56,7 +56,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
 
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, KC_PGUP,   KC_UP, KC_PGDN, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, XXXXXXX, KC_PGUP,   KC_UP, KC_PGDN, XXXXXXX,                       KC_F11,  KC_F12, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX,                        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -80,7 +80,7 @@ LGUI_T(KC_TAB),   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     
 
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        RESET, XXXXXXX,   DF(1), XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX,   DF(1), XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -183,13 +183,13 @@ void oled_render_logo(void) {
     oled_write_P(crkbd_logo, false);
 }
 
-void oled_task_user(void) {
-    if (is_keyboard_master()) {
+bool oled_task_user(void) {
+    if (is_keyboard_master( )) {
         oled_render_layer_state();
-        oled_render_keylog();
     } else {
         oled_render_logo();
-    }
+     }
+    return false;
 }
 
 static bool lower_pressed = false;

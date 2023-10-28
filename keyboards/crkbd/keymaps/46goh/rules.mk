@@ -15,4 +15,3 @@ SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 RGBLIGHT_TWINKLE = no
 LUNA_ENABLE = no
 OLED_ENABLE = yes
-OLED_DRIVER = SSD1306
